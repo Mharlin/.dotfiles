@@ -34,6 +34,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'altercation/vim-colors-solarized'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
+Plug 'maksimr/vim-jsbeautify'
 
 if g:has_async
   Plug 'w0rp/ale'
@@ -244,4 +245,13 @@ let g:multi_cursor_exit_from_insert_mode=0
 " Json format
 vmap =j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2)"<CR><CR>
 nmap =j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2)"<CR>
+
+" Search visual selection
+vnoremap <expr> // 'y/\V'.escape(@",'\').'<CR>'
+
+" JsBeautify
+autocmd FileType javascript noremap <buffer>  <c-=> :call RangeJsBeautify()<cr>
+autocmd FileType json noremap <buffer> <c-=> :call RangeJsonBeautify()<cr>
+autocmd FileType html noremap <buffer> <c-=> :call RangeHtmlBeautify()<cr>
+autocmd FileType css noremap <buffer> <c-=> :call RangeCSSBeautify()<cr>
 
