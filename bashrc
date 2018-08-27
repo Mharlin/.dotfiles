@@ -10,6 +10,9 @@ fi
 
 ssh-add ~/.ssh/id_rsa
 ssh-add ~/.ssh/sl_rsa
+ssh-add ~/.ssh/test.pem
+ssh-add ~/.ssh/production.pem
 
 alias vim='nvim'
 
+export PATH=$PATH:/Users/magnus/dev/sl/tools/bin

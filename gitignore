@@ -1,3 +1,6 @@
+# Project specific ignores
+common/ebok_conf/src/main/resources/conf/mh/run.properties
+
 ### Javascript ignores
 
 # Logs
@@ -146,6 +149,7 @@ cmake-build-debug/
 
 # IntelliJ
 out/
+.idea/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -161,3 +165,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# vim tags
+tags

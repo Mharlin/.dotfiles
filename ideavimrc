@@ -1,0 +1,6 @@
+set multiple-cursors
+map <C-N>  <A-N>
+
+" code refactoring
+
+nnoremap <space>rr :action RenameElement<cr>

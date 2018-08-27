@@ -6,13 +6,16 @@
 
 - link:
     ~/.gitconfig: gitconfig
+    ~/.gitconfig-work: gitconfig-work
     ~/.gitignore: gitignore
     ~/.tmux.conf: tmux.conf
+    ~/.config/nvim/init.vim: config/nvim/init.vim
     ~/.vim/autoload: vim/autoload/
     ~/.vimrc: vimrc
     ~/.bashrc: bashrc
     ~/.bash_profile: bash_profile
     ~/.zshrc: zshrc
+    ~/.ideavimrc: ideavimrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

@@ -1,30 +1,33 @@
 [user]
-	name = Magnus Härlin
-	email = magnus.harlin@gmail.com
+  name = Magnus Härlin
+  email = magnus.harlin@gmail.com
 [includeIf "gitdir:~/dev/sl/"]
-        path = .gitconfig-work
+  path = .gitconfig-work
 [core]
-	excludesfile = /Users/mharlin/.gitignore
+  excludesfile = /Users/magnus/.gitignore
+  autocrlf = input
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [push]
-	default = current
+  default = current
 [init]
-	templatedir = ~/.git-templates
+  templatedir = ~/.git-templates
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
 [pull]
-	rebase = true
+  rebase = true
 [alias]
-	up = pull --rebase --autostash
+  up = pull --rebase --autostash
 [remote "origin"]
-	prune = true
+  prune = true
 [fetch]
-	prune = true
+  prune = true
+[url "git@github.com:"]
+  insteadOf = https://github.com/

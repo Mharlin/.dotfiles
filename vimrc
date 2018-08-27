@@ -17,6 +17,7 @@ call plug#begin('~/.vim/bundle')
 " Define bundles via Github repos
 Plug 'christoomey/vim-run-interactive'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mileszs/ack.vim'
 Plug 'janko-m/vim-test'
 Plug 'pangloss/vim-javascript'
 Plug 'pbrisbin/vim-mkdir'
@@ -29,12 +30,22 @@ Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/tComment'
+Plug 'tpope/vim-ragtag'
 Plug 'scrooloose/nerdtree'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'altercation/vim-colors-solarized'
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
 Plug 'maksimr/vim-jsbeautify'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': './install.sh'
+    \ }
+Plug 'junegunn/fzf'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+Plug 'jiangmiao/auto-pairs'
 
 if g:has_async
   Plug 'w0rp/ale'
@@ -42,10 +53,29 @@ endif
 
 call plug#end()
 
+syntax on
+filetype plugin on
+filetype plugin indent on
+
+" Remove delay for Esc key
+set timeoutlen=1000 ttimeoutlen=0
+
+" Haskell config
+let g:LanguageClient_serverCommands = { 'haskell': ['hie', '--lsp'] }
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
 set termguicolors
+lang en_US
 
 " Use deoplete / previously called neocomplete
 let g:deoplete#enable_at_startup = 1
@@ -68,9 +98,6 @@ endif
 
 set clipboard=unnamed
 set mouse=
-syntax on
-filetype plugin on
-filetype plugin indent on
 
 set background=dark
 colorscheme solarized
@@ -125,13 +152,17 @@ set list listchars=tab:»·,trail:·,nbsp:·
 " Use one space, not two, after punctuation.
 set nojoinspaces
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+" info at https://github.com/mileszs/ack.vim
 if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
 
+  let g:ackprg = 'ag --vimgrep --smart-case'
+  cnoreabbrev ag Ack
+  cnoreabbrev aG Ack
+  cnoreabbrev Ag Ack
+  cnoreabbrev AG Ack
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
+  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s --exclude-standard'
+  let g:ctrlp_custom_ignore = '\v[\/](reverse-engineer)|\.git'
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
@@ -255,3 +286,8 @@ autocmd FileType json noremap <buffer> <c-=> :call RangeJsonBeautify()<cr>
 autocmd FileType html noremap <buffer> <c-=> :call RangeHtmlBeautify()<cr>
 autocmd FileType css noremap <buffer> <c-=> :call RangeCSSBeautify()<cr>
 
+" Ignore for Ctrl-p
+set wildignore+=*/target/*
+
+" save read-only files with w!!
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
